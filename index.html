@@ -1,216 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debjit Saha | AI & Web Developer</title>
+    
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== MODERN VARIABLES ===== */
+        :root {
+            --hue-color: 220; /* Blue/Navy Theme */
+            --first-color: hsl(var(--hue-color), 70%, 55%);
+            --first-color-alt: hsl(var(--hue-color), 70%, 45%);
+            --title-color: #fff;
+            --text-color: #cfd8e8;
+            --body-color: #0f172a; /* Dark Slate */
+            --container-color: #1e293b;
+            --glass-color: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--body-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* ===== LAYOUT ===== */
+        .bd-grid {
+            max-width: 1024px;
+            display: grid;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+        }
+        .section { padding: 4rem 0 2rem; }
+        .section-title {
+            font-size: 2rem;
+            color: var(--title-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        /* ===== HEADER / NAV ===== */
+        .l-header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background-color: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .nav {
+            height: 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav__logo { color: var(--title-color); font-weight: 700; font-size: 1.25rem; }
+        .nav__list { display: flex; gap: 2rem; }
+        .nav__link { color: var(--text-color); font-weight: 500; }
+        .nav__link:hover { color: var(--first-color); }
         
-        <link rel="icon" href="./assets/img/favicons/favicon.ico" >
-        <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicons/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicons/favicon-16x16.png">
-        <link rel="manifest" href="./assets/img/favicons/site.webmanifest">
+        /* Mobile Menu Hide */
+        @media screen and (max-width: 768px) {
+            .nav__menu {
+                position: fixed; top: -100%; left: 0; width: 100%;
+                background-color: var(--container-color);
+                padding: 2rem; transition: .4s;
+            }
+            .nav__list { flex-direction: column; align-items: center; }
+            .nav__menu.show { top: 3.5rem; }
+        }
 
-        <link rel="stylesheet" href="assets/css/styles.css">
+        /* ===== HOME SECTION ===== */
+        .home {
+            min-height: 100vh;
+            align-items: center;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .home__title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--title-color);
+        }
+        /* Gradient Text Effect */
+        .text-gradient {
+            background: linear-gradient(90deg, var(--first-color), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .home__subtitle { font-size: 1.25rem; margin-bottom: 2rem; color: #94a3b8; }
+        .button {
+            display: inline-block;
+            background-color: var(--first-color);
+            color: #fff;
+            padding: .75rem 2rem;
+            border-radius: .5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+        }
+        .button-ghost {
+            background: transparent;
+            border: 2px solid var(--first-color);
+            color: var(--first-color);
+            margin-left: 1rem;
+            box-shadow: none;
+        }
+        .home__blob { width: 400px; fill: var(--first-color); }
 
-        <!-- =====BOX ICONS===== -->
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        /* ===== CARDS (Glassmorphism) ===== */
+        .card {
+            background: var(--glass-color);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--first-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
 
-        <title>DEBJIT PORTFOLIO</title>
-    </head>
-    <body>
-        <!--===== HEADER =====-->
-        <header class="l-header">
-            <nav class="nav bd-grid">
-                <div>
-                    <a href="#" class="nav__logo">DEBWEB</a>
-                </div>
+        /* ===== ABOUT ===== */
+        .about__container {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .about__img img { border-radius: 1rem; }
+        
+        /* ===== SKILLS (Tags Style) ===== */
+        .skills__container {
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .skill-category h3 { margin-bottom: 1rem; color: var(--first-color); }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
 
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
-                        <li class="nav__item"><a href="#work" class="nav__link">Work</a></li>
-                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
-                    </ul>
-                </div>
+        /* ===== EXPERIENCE / PROJECTS (Grid) ===== */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .work__img {
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            height: 150px;
+            object-fit: cover;
+            width: 100%;
+            background: #2d3748; /* Placeholder color if image missing */
+        }
+        .exp-date { font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.5rem; display: block; }
+        .card-title { font-size: 1.25rem; color: var(--title-color); margin-bottom: 0.5rem; }
+        
+        /* ===== CONTACT ===== */
+        .contact__form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .contact__input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: var(--container-color);
+            border: 1px solid var(--border-color);
+            color: var(--title-color);
+            font-family: inherit;
+        }
+        .contact__input:focus { outline: none; border-color: var(--first-color); }
 
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-menu'></i>
-                </div>
-            </nav>
-        </header>
+        /* ===== FOOTER ===== */
+        .footer {
+            background-color: var(--container-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+        .footer__social { margin: 1rem 0; }
+        .footer__social a { font-size: 1.5rem; margin: 0 0.5rem; color: var(--title-color); }
 
-        <main class="l-main">
-            <!--===== HOME =====-->
-            <section class="home bd-grid" id="home">
-                <div class="home__data">
-                    <h1 class="home__title">Hi,<br>I'am <span class="home__title-color">Debjit Saha</span><br>FrontEnd Developer</h1>
+        /* ===== MEDIA QUERIES ===== */
+        @media screen and (min-width: 1024px) {
+            .bd-grid { margin-left: auto; margin-right: auto; }
+        }
+        @media screen and (max-width: 768px) {
+            .home { grid-template-columns: 1fr; text-align: center; }
+            .home__img { display: none; } /* Hide blob on mobile for cleaner look */
+            .skills__container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
 
-                    <a onclick="handleContact()" style="cursor: pointer" class="button">Contact</a>
-                    <a id="contact-01" style="display: none" href="https://docs.google.com/forms/d/e/1FAIpQLSdE0jzucNjOTiFbpDOEkR_LKXsgNAwFW3GYqmcQUAw5hflRoQ/viewform" ></a>
-                </div>
+    <header class="l-header">
+        <nav class="nav bd-grid">
+            <a href="#" class="nav__logo">DEBJIT<span style="color:var(--first-color)">.DEV</span></a>
 
-                <div class="home__social">
-                    <a href="https://www.linkedin.com/in/debjit-saha-19829424a" class="home__social-icon"><i class='bx bxl-linkedin'></i></a>
-                    
-                    <a href="https://github.com/DEBWEBB" class="home__social-icon"><i class='bx bxl-github' ></i></a>
-                </div>
-
-                <div class="home__img">
-                    <svg class="home__blob" viewBox="0 0 479 467" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <mask id="mask0" mask-type="alpha">
-                            <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"/>
-                        </mask>
-                        <g mask="url(#mask0)">
-                            <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"/>
-                            <image class="home__blob-img" x="50" y="60" href="assets/img/perfil.png"/>
-                        </g>
-                    </svg>
-                </div>
-            </section>
-
-            <!--===== ABOUT =====-->
-            <section class="about section " id="about">
-                <h2 class="section-title">About</h2>
-
-                <div class="about__container bd-grid">
-                    <div class="about__img">
-                        <img src="assets/img/about.jpg" alt="">
-                    </div>
-                    
-                    <div>
-                        <h2 class="about__subtitle">I'am Debjit</h2>
-                        <p class="about__text">passionate and driven front-end developer currently pursuing a Bachelor of Technology degree. At the age of 20, I have already established a strong foundation in web development and design, with a keen eye for creating visually appealing and user-friendly interfaces. With a commitment to staying current with the latest industry trends and technologies, I am dedicated to delivering exceptional user experiences through my work. My academic pursuits in B.Tech complement my practical skills, making me a well-rounded and motivated professional in the field of front-end development.</p>           
-                    </div>                                   
-                </div>
-            </section>
-
-            <!--===== SKILLS =====-->
-            <section class="skills section" id="skills">
-                <h2 class="section-title">Skills</h2>
-
-                <div class="skills__container bd-grid">          
-                    <div>
-                        <h2 class="skills__subtitle">Profesional Skills</h2>
-                        <p class="skills__text">I possess strong proficiency in HTML, Java, and CSS, complemented by a growing familiarity with React.js.</p>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-html5 skills__icon'></i>
-                                <span class="skills__name">HTML5</span>
-                            </div>
-                            <div class="skills__bar skills__html">
-
-                            </div>
-                            <div>
-                                <span class="skills__percentage">95%</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-css3 skills__icon'></i>
-                                <span class="skills__name">CSS3</span>
-                            </div>
-                            <div class="skills__bar skills__css">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">85%</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxl-javascript skills__icon' ></i>
-                                <span class="skills__name">JAVASCRIPT</span>
-                            </div>
-                            <div class="skills__bar skills__js">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">65%</span>
-                            </div>
-                        </div>
-                        <div class="skills__data">
-                            <div class="skills__names">
-                                <i class='bx bxs-paint skills__icon'></i>
-                                <span class="skills__name">React js</span>
-                            </div>
-                            <div class="skills__bar skills__ux">
-                                
-                            </div>
-                            <div>
-                                <span class="skills__percentage">40%</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>              
-                        <img src="assets/img/works.jpg" alt="" class="skills__img">
-                    </div>
-                </div>
-            </section>
-
-            <!--===== WORK =====-->
-            <section class="work section" id="work">
-                <h2 class="section-title">Work</h2>
-
-                <div class="work__container bd-grid">
-                    <a href="" class="work__img">
-                        <img src="assets/img/work1.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work2.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work3.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work4.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work5.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work6.jpg" alt="">
-                    </a>
-                </div>
-            </section>
-
-            <!--===== CONTACT =====-->
-            <section class="contact section" id="contact">
-                <h2 class="section-title">Contact</h2>
-
-                <div class="contact__container bd-grid">
-                    <form action="" class="contact__form">
-                        <input type="text" placeholder="Name" class="contact__input">
-                        <input type="mail" placeholder="Email" class="contact__input">
-                        <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
-                        <input type="button" value="Enter" class="contact__button button">
-                    </form>
-                </div>
-            </section>
-        </main>
-
-        <!--===== FOOTER =====-->
-        <footer class="footer">
-            <p class="footer__title">DEBWEB</p>
-            <div class="footer__social">
-                <a href="https://www.facebook.com/debjit.saha.9674?mibextid=ZbWKwL" class="footer__icon"><i class='bx bxl-facebook' ></i></a>
-                <a href="https://www.instagram.com/debjit_saha_2/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
-                <a href="https://twitter.com/i/flow/login?redirect_after_login=%2FDEBWEB_official" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
+                    <li class="nav__item"><a href="#experience" class="nav__link">Experience</a></li>
+                    <li class="nav__item"><a href="#projects" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
             </div>
-            
-            <p class="footer__copy">Contact No: +91 9734278080</p>
-            <p class="footer__copy">Email: sahadebjit357@gmail.com</p>
-            <p class="footer__copy">&#169; 2023 Debjit Saha. All rigths reserved</p>
 
-        </footer>
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </nav>
+    </header>
 
+    <main class="l-main">
+        <section class="home bd-grid" id="home">
+            <div class="home__data">
+                <h1 class="home__title">Hello, I'm <br> <span class="text-gradient">Debjit Saha</span></h1>
+                <h2 class="home__subtitle">AI/ML Engineer & Full Stack Developer</h2>
+                <p style="margin-bottom: 2rem;">
+                    B.Tech Undergraduate (2025) passionate about building intelligent systems 
+                    and responsive web applications.
+                </p>
+                <a href="#contact" class="button">Contact Me</a>
+                <a href="#" class="button button-ghost">Download CV <i class='bx bx-download'></i></a>
+            </div>
 
-        <!--===== SCROLL REVEAL =====-->
-        <script src="https://unpkg.com/scrollreveal"></script>
+            <div class="home__img">
+                <svg class="home__blob" viewBox="0 0 479 467" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0" mask-type="alpha">
+                        <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"/>
+                    </mask>
+                    <g mask="url(#mask0)">
+                        <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"/>
+                        <image class="home__blob-img" x="50" y="60" href="assets/img/perfil.png"/>
+                    </g>
+                </svg>
+            </div>
+        </section>
 
-        <!--===== MAIN JS =====-->
-        <script src="assets/js/main.js"></script>
-    </body>
+        <section class="about section" id="about">
+            <h2 class="section-title">About Me</h2>
+            <div class="about__container bd-grid">
+                <div class="about__img">
+                    <img src="assets/img/about.jpg" alt="Debjit Saha">
+                </div>
+                <div>
+                    <h2 style="margin-bottom: 1rem;">I'm Debjit, a future-ready Developer.</h2>
+                    <p class="about__text" style="color: #94a3b8;">
+                        I am currently pursuing a <strong>B.Tech in Artificial Intelligence and Machine Learning</strong> at Narula Institute of Technology, Kolkata[cite: 3, 4].
+                        <br><br>
+                        With a CGPA of 7.89, I combine academic rigor with practical experience in Web Development and Data Analytics. I am driven by creating impactful tech experiences, from organizing TechFests [cite: 43] to building computer vision algorithms[cite: 25].
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills section" id="skills">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="bd-grid skills__container">
+                
+                <div class="card skill-category">
+                    <h3><i class='bx bx-code-alt'></i> Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">SQL</span>
+                    </div>
+                </div>
+
+                <div class="card skill-category">
+                    <h3><i class='bx bxl-react'></i> Web Dev</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">HTML5/CSS3</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="card skill-category">
+                    <h3><i class='bx bx-brain'></i> AI & Data</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Tableau</span>
+                        <span class="skill-tag">Data Analytics</span>
+                        <span class="skill-tag">Excel</span>
+                    </div>
+                </div>
+
+                <div class="card skill-category">
+                    <h3><i class='bx bx-wrench'></i> Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git/GitHub</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">VS Code</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section" id="experience">
+            <h2 class="section-title">Experience</h2>
+            <div class="bd-grid grid-container">
+                
+                <div class="card">
+                    <span class="exp-date">Sep 2023 - Oct 2023</span>
+                    <h3 class="card-title">Web Development Intern</h3>
+                    <span style="color:var(--first-color)">CodSoft</span>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">
+                        Built a Netflix-style streaming platform clone and a virtual calculator. Focused on dynamic UI components[cite: 10, 11].
+                    </p>
+                </div>
+
+                <div class="card">
+                    <span class="exp-date">Nov 2025</span>
+                    <h3 class="card-title">Data Analytics Simulation</h3>
+                    <span style="color:var(--first-color)">Deloitte Australia</span>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">
+                        Executed data dashboards using Tableau and performed forensic data analysis to derive business insights[cite: 12, 13, 15].
+                    </p>
+                </div>
+
+                <div class="card">
+                    <span class="exp-date">May 2024 - May 2025</span>
+                    <h3 class="card-title">Organizer - KRITANJ</h3>
+                    <span style="color:var(--first-color)">Narula Inst. of Tech</span>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">
+                        Collaborated with faculty and external partners to execute the annual TechFest, enhancing college reputation[cite: 43, 44].
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="bd-grid grid-container">
+                
+                <div class="card">
+                    <div class="work__img" style="background: #1e40af;"></div> <h3 class="card-title">Parking Space Counter</h3>
+                    <div class="skill-tags" style="margin-bottom: 1rem;">
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Python</span>
+                    </div>
+                    <p style="font-size: 0.9rem;">
+                        Computer vision system that detects free parking spaces in real-time, optimizing parking management[cite: 25, 29].
+                    </p>
+                    <a href="#" style="color: var(--first-color); margin-top: 1rem; display: block; font-weight: 600;">View Code <i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+
+                <div class="card">
+                    <div class="work__img" style="background: #3730a3;"></div>
+                    <h3 class="card-title">College Question Bank</h3>
+                    <div class="skill-tags" style="margin-bottom: 1rem;">
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                    <p style="font-size: 0.9rem;">
+                        A responsive academic resource platform with a modern UI design for student access to study materials[cite: 21, 24].
+                    </p>
+                    <a href="#" style="color: var(--first-color); margin-top: 1rem; display: block; font-weight: 600;">View Code <i class='bx bx-right-arrow-alt'></i></a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="contact section" id="contact">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="bd-grid">
+                <form action="" class="contact__form">
+                    <input type="text" placeholder="Name" class="contact__input">
+                    <input type="email" placeholder="Email" class="contact__input">
+                    <textarea cols="0" rows="6" class="contact__input" placeholder="Message"></textarea>
+                    <input type="button" value="Send Message" class="button" style="border:none; cursor:pointer; width:100%;">
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__title">DEBJIT SAHA</p>
+        <div class="footer__social">
+            <a href="https://www.linkedin.com/in/debjit-saha-19829424a" target="_blank"><i class='bx bxl-linkedin'></i></a>
+            <a href="https://github.com/DEBWEBB" target="_blank"><i class='bx bxl-github' ></i></a>
+            <a href="mailto:sahadebjit357@gmail.com"><i class='bx bx-envelope'></i></a>
+        </div>
+        <p style="font-size: 0.8rem; color: #64748b;">
+            +91 9734278080 | sahadebjit357@gmail.com <br>
+            &#169; 2025 Debjit Saha. All rights reserved.
+        </p>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        const sr = ScrollReveal({
+            origin: 'top',
+            distance: '80px',
+            duration: 2000,
+            reset: true
+        });
+        sr.reveal('.home__title', {});
+        sr.reveal('.button', {delay: 200});
+        sr.reveal('.home__img', {delay: 400});
+        sr.reveal('.home__social-icon', { interval: 200 });
+        sr.reveal('.about__img', {});
+        sr.reveal('.about__subtitle', {delay: 400});
+        sr.reveal('.about__text', {delay: 400});
+        sr.reveal('.card', {interval: 200});
+        
+        // Mobile Menu Logic
+        const showMenu = (toggleId, navId) =>{
+            const toggle = document.getElementById(toggleId),
+            nav = document.getElementById(navId)
+            if(toggle && nav){
+                toggle.addEventListener('click', ()=>{
+                    nav.classList.toggle('show')
+                })
+            }
+        }
+        showMenu('nav-toggle','nav-menu')
+    </script>
+</body>
 </html>

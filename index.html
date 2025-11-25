@@ -34,6 +34,7 @@
                 linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
+            padding-top: var(--header-height); /* Prevent content from hiding behind fixed header */
         }
 
         /* Scrollbar */
@@ -78,17 +79,20 @@
             padding-left: 15px;
         }
 
-        /* ===== HEADER / NAV ===== */
+        /* ===== HEADER / NAV (FIXED) ===== */
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
+            height: var(--header-height);
             background: rgba(5, 5, 5, 0.95);
             backdrop-filter: blur(5px);
-            z-index: 100;
+            z-index: 1000; /* High Z-index ensures it stays on top */
             border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            display: flex;
+            align-items: center;
         }
         nav {
-            height: var(--header-height);
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -100,6 +104,7 @@
             color: #fff;
             letter-spacing: 2px;
             text-decoration: none;
+            z-index: 1001; /* Ensure logo is above menu */
         }
         .logo span { color: var(--neon-cyan); }
         
@@ -117,15 +122,20 @@
             text-shadow: 0 0 8px var(--neon-cyan);
         }
 
-        .nav__toggle { display: none; font-size: 1.5rem; cursor: pointer; }
+        .nav__toggle { 
+            display: none; 
+            font-size: 1.8rem; 
+            color: #fff;
+            cursor: pointer;
+            z-index: 1001; /* Ensure toggle button is above menu */
+        }
         
         /* ===== HERO SECTION ===== */
         .hero {
-            min-height: 100vh;
+            min-height: 90vh; /* Adjusted for mobile view */
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            padding-top: var(--header-height);
         }
         .hero__content h3 {
             color: var(--neon-purple);
@@ -212,7 +222,7 @@
         .hex-frame {
             width: 350px;
             height: 350px;
-            /* Placeholder background image, replace 'assets/img/perfil.png' with actual path */
+            /* Placeholder background image */
             background: url('https://via.placeholder.com/350') no-repeat center top/cover; 
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
             filter: grayscale(100%) contrast(1.2);
@@ -346,72 +356,64 @@
         }
         .contact-input:focus { outline: none; border-bottom: 1px solid var(--neon-cyan); }
 
-        /* ===== MEDIA QUERIES (RESPONSIVENESS) ===== */
+        /* ===== RESPONSIVE NAVBAR & LAYOUT ===== */
         @media screen and (max-width: 968px) {
             .hero {
-                grid-template-columns: 1fr; /* Stack Image and Text */
+                grid-template-columns: 1fr; 
                 text-align: center;
                 gap: 2rem;
-                padding-top: 6rem;
+                padding-top: 2rem;
             }
             .hero__content { order: 1; }
             .hero__img-container { order: 0; }
-            
-            .hero__description {
-                margin: 1.5rem auto; /* Center the description */
-                text-align: left;
-            }
+            .hero__description { margin: 1.5rem auto; text-align: left; }
         }
 
+        /* --- MOBILE MENU LOGIC --- */
         @media screen and (max-width: 768px) {
             .nav__toggle {
-                display: block; /* Show menu icon */
-                z-index: 101;
+                display: block; /* Show hamburger icon */
             }
             
             .nav__menu {
                 position: fixed;
-                top: -100%; /* Hidden by default */
+                top: -100%; /* Hidden off-screen */
                 left: 0;
                 width: 100%;
-                background: rgba(0,0,0,0.95);
-                padding: 4rem 0 3rem;
+                background-color: #050505; /* Solid color (no transparency) */
+                border-bottom: 2px solid var(--neon-cyan);
+                padding: 4rem 0;
                 transition: 0.4s;
-                box-shadow: 0 4px 10px rgba(0, 243, 255, 0.1);
-                border-bottom: 1px solid var(--neon-cyan);
-                text-align: center;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+                z-index: 1000;
             }
             
+            /* Class added by JS to slide menu down */
             .nav__menu.show {
-                top: var(--header-height); /* Slide down */
+                top: var(--header-height); 
             }
 
             .nav__list {
                 flex-direction: column;
-                gap: 1.5rem;
+                align-items: center;
+                gap: 2.5rem; /* Space out items */
+            }
+            
+            .nav__link {
+                font-size: 1.2rem; /* Bigger text for touch */
             }
 
-            /* Resize Hexagon for Mobile */
+            /* Adjust visual elements for mobile */
             .hex-frame { width: 280px; height: 280px; }
             .hex-border { width: 290px; height: 290px; }
-
-            /* Typography Adjustments */
             .glitch { font-size: 2.5rem; }
             h2.section-title { font-size: 1.8rem; }
-            
-            /* Form Stacking */
             .form-grid { grid-template-columns: 1fr; }
-            
-            /* Stats Grid */
-            .stats-grid { grid-template-columns: 1fr; }
-            
-            /* Padding Adjustments */
             .terminal-container { padding: 1.5rem; }
             .contact-box { padding: 1.5rem; }
         }
 
         @media screen and (max-width: 350px) {
-            /* Small Phones */
             .hex-frame { width: 220px; height: 220px; }
             .hex-border { width: 230px; height: 230px; }
             .glitch { font-size: 2rem; }
@@ -428,6 +430,7 @@
             <nav>
                 <a href="#" class="logo">DEBJIT<span>.EXE</span></a>
                 
+                <!-- Navigation Menu -->
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item"><a href="#home" class="nav__link active">// HOME</a></li>
@@ -438,8 +441,9 @@
                     </ul>
                 </div>
 
+                <!-- Hamburger Icon -->
                 <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt' style="color:white;"></i>
+                    <i class='bx bx-grid-alt'></i>
                 </div>
             </nav>
         </div>
@@ -614,26 +618,38 @@
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script>
-        /* Mobile Menu */
-        const toggle = document.getElementById('nav-toggle');
-        const nav = document.getElementById('nav-menu');
+        /* ===== MENU TOGGLE LOGIC ===== */
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
         const navLinks = document.querySelectorAll('.nav__link');
-        
-        if(toggle && nav){
-            toggle.addEventListener('click', ()=>{
-                nav.classList.toggle('show');
-                // Toggle Icon change (optional)
-                toggle.firstElementChild.classList.toggle('bx-x');
+        const navIcon = navToggle.querySelector('i');
+
+        // Toggle Menu Function
+        if(navToggle && navMenu){
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('show');
+                
+                // Toggle Icon between Grid and X
+                if(navMenu.classList.contains('show')){
+                    navIcon.classList.remove('bx-grid-alt');
+                    navIcon.classList.add('bx-x');
+                } else {
+                    navIcon.classList.remove('bx-x');
+                    navIcon.classList.add('bx-grid-alt');
+                }
             });
         }
 
-        // Close menu when a link is clicked
-        navLinks.forEach(n => n.addEventListener('click', () => {
-            nav.classList.remove('show');
-            if(toggle) toggle.firstElementChild.classList.remove('bx-x');
-        }));
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('show');
+                navIcon.classList.remove('bx-x');
+                navIcon.classList.add('bx-grid-alt');
+            });
+        });
 
-        /* Scroll Animation */
+        /* ===== SCROLL REVEAL ANIMATION ===== */
         const sr = ScrollReveal({
             origin: 'bottom',
             distance: '50px',

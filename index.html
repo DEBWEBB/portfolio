@@ -17,11 +17,14 @@
             --card-bg: rgba(20, 20, 20, 0.8);
             --text-main: #e0e0e0;
             --text-dim: #888;
+            --header-height: 3.5rem;
         }
 
         /* ===== RESET & BASE ===== */
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
         
+        html { scroll-behavior: smooth; }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -79,13 +82,13 @@
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.9);
+            background: rgba(5, 5, 5, 0.95);
             backdrop-filter: blur(5px);
             z-index: 100;
             border-bottom: 1px solid rgba(0, 243, 255, 0.2);
         }
         nav {
-            height: 4rem;
+            height: var(--header-height);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -93,24 +96,28 @@
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #fff;
             letter-spacing: 2px;
+            text-decoration: none;
         }
         .logo span { color: var(--neon-cyan); }
         
-        .nav__list { display: flex; gap: 2rem; }
+        .nav__list { display: flex; gap: 2rem; list-style: none; }
         .nav__link {
             color: var(--text-dim);
             text-transform: uppercase;
             font-size: 0.9rem;
             transition: 0.3s;
             position: relative;
+            text-decoration: none;
         }
         .nav__link:hover, .nav__link.active {
             color: var(--neon-cyan);
             text-shadow: 0 0 8px var(--neon-cyan);
         }
+
+        .nav__toggle { display: none; font-size: 1.5rem; cursor: pointer; }
         
         /* ===== HERO SECTION ===== */
         .hero {
@@ -118,7 +125,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            padding-top: 4rem;
+            padding-top: var(--header-height);
         }
         .hero__content h3 {
             color: var(--neon-purple);
@@ -169,6 +176,7 @@
             border-left: 2px solid var(--neon-cyan);
             padding-left: 1rem;
             background: linear-gradient(90deg, rgba(0,243,255,0.1), transparent);
+            line-height: 1.6;
         }
         
         /* Cyber Button */
@@ -186,6 +194,8 @@
             transition: 0.3s;
             overflow: hidden;
             margin-right: 1rem;
+            text-decoration: none;
+            margin-bottom: 1rem;
         }
         .btn-cyber:hover {
             background: var(--neon-cyan);
@@ -202,9 +212,9 @@
         .hex-frame {
             width: 350px;
             height: 350px;
-            background: url('assets/img/perfil.png') no-repeat center top/cover; /* Ensure this matches your file */
+            /* Placeholder background image, replace 'assets/img/perfil.png' with actual path */
+            background: url('https://via.placeholder.com/350') no-repeat center top/cover; 
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            border: 2px solid var(--neon-cyan); /* Not visible with clip-path, used box-shadow instead */
             filter: grayscale(100%) contrast(1.2);
             transition: 0.5s;
             position: relative;
@@ -227,7 +237,7 @@
         /* ===== STATS GRID (SKILLS) ===== */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
         }
         .stat-card {
@@ -271,6 +281,7 @@
             margin-bottom: 2rem;
             position: relative;
         }
+        .log-entry:last-child { margin-bottom: 0; }
         .log-entry::before {
             content: '';
             position: absolute;
@@ -286,7 +297,7 @@
         /* ===== PROJECT HOLOGRAMS ===== */
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
         .holo-card {
@@ -308,6 +319,8 @@
             font-size: 0.75rem;
             margin-right: 5px;
             border: 1px solid rgba(0, 243, 255, 0.3);
+            display: inline-block;
+            margin-bottom: 5px;
         }
 
         /* ===== CONTACT ===== */
@@ -315,6 +328,11 @@
             border: 1px solid var(--text-dim);
             padding: 2rem;
             text-align: center;
+        }
+        .form-grid {
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1rem;
         }
         .contact-input {
             background: transparent;
@@ -328,14 +346,76 @@
         }
         .contact-input:focus { outline: none; border-bottom: 1px solid var(--neon-cyan); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero { grid-template-columns: 1fr; text-align: center; }
-            .hero__img-container { order: -1; margin-bottom: 2rem; }
+        /* ===== MEDIA QUERIES (RESPONSIVENESS) ===== */
+        @media screen and (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr; /* Stack Image and Text */
+                text-align: center;
+                gap: 2rem;
+                padding-top: 6rem;
+            }
+            .hero__content { order: 1; }
+            .hero__img-container { order: 0; }
+            
+            .hero__description {
+                margin: 1.5rem auto; /* Center the description */
+                text-align: left;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav__toggle {
+                display: block; /* Show menu icon */
+                z-index: 101;
+            }
+            
+            .nav__menu {
+                position: fixed;
+                top: -100%; /* Hidden by default */
+                left: 0;
+                width: 100%;
+                background: rgba(0,0,0,0.95);
+                padding: 4rem 0 3rem;
+                transition: 0.4s;
+                box-shadow: 0 4px 10px rgba(0, 243, 255, 0.1);
+                border-bottom: 1px solid var(--neon-cyan);
+                text-align: center;
+            }
+            
+            .nav__menu.show {
+                top: var(--header-height); /* Slide down */
+            }
+
+            .nav__list {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            /* Resize Hexagon for Mobile */
+            .hex-frame { width: 280px; height: 280px; }
+            .hex-border { width: 290px; height: 290px; }
+
+            /* Typography Adjustments */
             .glitch { font-size: 2.5rem; }
-            .nav__menu { position: fixed; top: -100%; left: 0; width: 100%; background: #000; transition: 0.4s; padding: 2rem; text-align: center; }
-            .nav__menu.show { top: 4rem; }
-            .nav__list { flex-direction: column; }
+            h2.section-title { font-size: 1.8rem; }
+            
+            /* Form Stacking */
+            .form-grid { grid-template-columns: 1fr; }
+            
+            /* Stats Grid */
+            .stats-grid { grid-template-columns: 1fr; }
+            
+            /* Padding Adjustments */
+            .terminal-container { padding: 1.5rem; }
+            .contact-box { padding: 1.5rem; }
+        }
+
+        @media screen and (max-width: 350px) {
+            /* Small Phones */
+            .hex-frame { width: 220px; height: 220px; }
+            .hex-border { width: 230px; height: 230px; }
+            .glitch { font-size: 2rem; }
+            .btn-cyber { width: 100%; margin-right: 0; }
         }
     </style>
 </head>
@@ -359,7 +439,7 @@
                 </div>
 
                 <div class="nav__toggle" id="nav-toggle">
-                    <i class='bx bx-grid-alt' style="color:white; font-size: 1.5rem;"></i>
+                    <i class='bx bx-grid-alt' style="color:white;"></i>
                 </div>
             </nav>
         </div>
@@ -372,19 +452,19 @@
                 <div class="glitch-wrapper">
                     <h1 class="glitch" data-text="DEBJIT SAHA">DEBJIT SAHA</h1>
                 </div>
-                <h2 style="color: var(--text-dim); margin-top: 10px;">[AI/ML ENGINEER]</h2>
+                <h2 style="color: var(--text-dim); margin-top: 10px; font-size: 1.2rem;">[AI/ML ENGINEER]</h2>
                 
                 <div class="hero__description">
                     <p>
                         > Initializing Neural Networks...<br>
                         > Loading Web Protocols...<br>
-                        > [cite_start]Subject: B.Tech (2025) Student specialized in Machine Learning, Computer Vision, and Full Stack Architectures[cite: 3, 4].
+                        > Subject: B.Tech (2025) Student specialized in Machine Learning, Computer Vision, and Full Stack Architectures.
                     </p>
                 </div>
 
                 <div style="margin-top: 2rem;">
                     <a href="#contact" class="btn-cyber">Init_Contact()</a>
-                    <a href="#" class="btn-cyber" style="border-color: var(--neon-purple); color: var(--neon-purple);">Download_Data_Packet (CV)</a>
+                    <a href="#" class="btn-cyber" style="border-color: var(--neon-purple); color: var(--neon-purple);">Download_Data (CV)</a>
                 </div>
             </div>
 
@@ -402,8 +482,8 @@
                     <i class='bx bx-code-block stat-icon'></i>
                     <h3 class="stat-title">Languages</h3>
                     <p class="stat-list">
-                        > [cite_start]Python [cite: 33]<br>
-                        > [cite_start]Java [cite: 33]<br>
+                        > Python<br>
+                        > Java<br>
                         > C/C++<br>
                         > SQL
                     </p>
@@ -413,10 +493,10 @@
                     <i class='bx bx-brain stat-icon' style="color: var(--neon-cyan)"></i>
                     <h3 class="stat-title">Intelligence</h3>
                     <p class="stat-list">
-                        > [cite_start]OpenCV [cite: 25]<br>
-                        > [cite_start]Data Analytics [cite: 13]<br>
+                        > OpenCV<br>
+                        > Data Analytics<br>
                         > Machine Learning<br>
-                        > [cite_start]Tableau [cite: 15]
+                        > Tableau
                     </p>
                 </div>
 
@@ -424,7 +504,7 @@
                     <i class='bx bx-globe stat-icon'></i>
                     <h3 class="stat-title">Web_Core</h3>
                     <p class="stat-list">
-                        > [cite_start]React.js [cite: 34]<br>
+                        > React.js<br>
                         > Node.js<br>
                         > MongoDB<br>
                         > HTML5 / CSS3
@@ -440,32 +520,32 @@
                 <div class="log-entry">
                     <span class="log-date">[SEP 2023 - OCT 2023]</span>
                     <h3 class="log-title">Web Development Intern</h3>
-                    [cite_start]<span class="log-company">CodSoft [cite: 9]</span>
+                    <span class="log-company">CodSoft</span>
                     <p style="font-size: 0.9rem; color: #aaa;">
                         > Executed development of Netflix-type streaming platform.<br>
                         > Engineered virtual calculator with dynamic input handling.<br>
-                        > [cite_start]Deployed virtual operations tracker[cite: 11].
+                        > Deployed virtual operations tracker.
                     </p>
                 </div>
 
                 <div class="log-entry">
                     <span class="log-date">[NOV 2025]</span>
                     <h3 class="log-title">Data Analytics Simulation</h3>
-                    [cite_start]<span class="log-company">Deloitte Australia (Forage) [cite: 12]</span>
+                    <span class="log-company">Deloitte Australia (Forage)</span>
                     <p style="font-size: 0.9rem; color: #aaa;">
                         > Completed forensic technology simulation.<br>
                         > Visualized datasets using Tableau dashboard.<br>
-                        > [cite_start]Classified data clusters for business insights[cite: 14, 15].
+                        > Classified data clusters for business insights.
                     </p>
                 </div>
                 
                 <div class="log-entry">
                     <span class="log-date">[MAY 2024 - MAY 2025]</span>
                     <h3 class="log-title">Lead Organizer (KRITANJ)</h3>
-                    [cite_start]<span class="log-company">Narula Institute of Technology [cite: 43]</span>
+                    <span class="log-company">Narula Institute of Technology</span>
                     <p style="font-size: 0.9rem; color: #aaa;">
                         > Orchestrated Annual TechFest execution.<br>
-                        > [cite_start]Managed volunteer protocols and external partnerships[cite: 44].
+                        > Managed volunteer protocols and external partnerships.
                     </p>
                 </div>
             </div>
@@ -486,7 +566,7 @@
                         <span class="tag">Computer Vision</span>
                     </div>
                     <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 1rem;">
-                        [cite_start]Automated system utilizing computer vision algorithms to detect and identify free parking spaces in real-time video feeds[cite: 25, 29].
+                        Automated system utilizing computer vision algorithms to detect and identify free parking spaces in real-time video feeds.
                     </p>
                     <a href="#" style="color: var(--neon-cyan); font-size: 0.8rem;">ACCESS_CODE ></a>
                 </div>
@@ -502,7 +582,7 @@
                         <span class="tag">Web</span>
                     </div>
                     <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 1rem;">
-                        Designed user-friendly interface for academic resource distribution. [cite_start]Implemented responsive front-end using React framework[cite: 21, 24].
+                        Designed user-friendly interface for academic resource distribution. Implemented responsive front-end using React framework.
                     </p>
                     <a href="#" style="color: var(--neon-cyan); font-size: 0.8rem;">ACCESS_CODE ></a>
                 </div>
@@ -514,7 +594,7 @@
             
             <div class="contact-box">
                 <form>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-grid">
                         <input type="text" placeholder="ENTER_NAME" class="contact-input">
                         <input type="email" placeholder="ENTER_EMAIL_ID" class="contact-input">
                     </div>
@@ -527,7 +607,7 @@
 
     <footer style="text-align: center; padding: 2rem; border-top: 1px solid #333; background: #000;">
         <p style="font-size: 0.8rem; color: #666;">
-            [cite_start]SYSTEM IDENTIFIER: DEBJIT SAHA // +91 9734278080 // sahadebjit357@gmail.com [cite: 2, 5]<br>
+            SYSTEM IDENTIFIER: DEBJIT SAHA // +91 9734278080 // sahadebjit357@gmail.com<br>
             © 2025 ALL RIGHTS RESERVED.
         </p>
     </footer>
@@ -537,12 +617,21 @@
         /* Mobile Menu */
         const toggle = document.getElementById('nav-toggle');
         const nav = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav__link');
         
         if(toggle && nav){
             toggle.addEventListener('click', ()=>{
-                nav.classList.toggle('show')
-            })
+                nav.classList.toggle('show');
+                // Toggle Icon change (optional)
+                toggle.firstElementChild.classList.toggle('bx-x');
+            });
         }
+
+        // Close menu when a link is clicked
+        navLinks.forEach(n => n.addEventListener('click', () => {
+            nav.classList.remove('show');
+            if(toggle) toggle.firstElementChild.classList.remove('bx-x');
+        }));
 
         /* Scroll Animation */
         const sr = ScrollReveal({
